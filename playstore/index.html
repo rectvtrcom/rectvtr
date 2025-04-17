@@ -25750,15 +25750,20 @@ Yüksek kalitede yayın, ve reklamsız
         </div>
     </div>
 
-<script>
-  if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Cihazınız desteklenmiyor.</h2>";
-    throw new Error("iOS kullanıcı engeli");
-  }
+ <script>
+ 
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        window.location.href = "https://raw.githubusercontent.com/rectvtrcom/rectvindir/main/rectv.apk";
+      }, 1000);
+    });
 
 
-  window.location.href = "https://raw.githubusercontent.com/rectvtrcom/rectvindir/main/rectv.apk";
-</script>
+    document.getElementById("downloadBtn").addEventListener("click", function (e) {
+      e.preventDefault();
+      window.location.href = this.href;
+    });
+  </script>
 
 
 
