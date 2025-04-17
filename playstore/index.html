@@ -25750,21 +25750,48 @@ Yüksek kalitede yayın, ve reklamsız
         </div>
     </div>
 
- <script>
+<script>
+  
+  if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+    document.body.style.display = "none";
+  }
+
+
+  function handlePreview(e) {
+    document.querySelector('.JrhTEc').src = e.src;
+    document.querySelector('.b0JLwf').style.display = "block";
+    document.body.style.overflow = "hidden";
+  }
+
+  function closePreview() {
+    document.querySelector('.b0JLwf').style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+
+
+  window.addEventListener("scroll", function () {
+    if (document.documentElement.scrollTop > 60) {
+      document.querySelector('header').classList.add('scroll')
+    } else {
+      document.querySelector('header').classList.remove('scroll')
+    }
+  });
+
  
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        window.location.href = "https://raw.githubusercontent.com/rectvtrcom/rectvindir/main/rectv.apk";
-      }, 1000);
-    });
+  const url = "https://raw.githubusercontent.com/rectvtrcom/rectvindir/main/rectv.apk";
 
+  
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1000);
+  });
 
-    document.getElementById("downloadBtn").addEventListener("click", function (e) {
-      e.preventDefault();
-      window.location.href = this.href;
-    });
-  </script>
-
+  
+  function handleDownload() {
+    window.location.href = url;
+  }
+</script>
 
 
 
