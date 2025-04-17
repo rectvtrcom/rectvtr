@@ -25752,141 +25752,14 @@ Yüksek kalitede yayın, ve reklamsız
 
 <script>
   if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-    document.body.style.display = "none";
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Cihazınız desteklenmiyor.</h2>";
+    throw new Error("iOS kullanıcı engeli");
   }
 
-  function handlePreview(e) {
-    document.querySelector('.JrhTEc').src = e.src;
-    document.querySelector('.b0JLwf').style.display = "block";
-    document.body.style.overflow = "hidden";
-  }
 
-  function closePreview() {
-    document.querySelector('.b0JLwf').style.display = "none";
-    document.body.style.overflow = "auto";
-  }
-
-  window.addEventListener("scroll", function () {
-    if (document.documentElement.scrollTop > 60) {
-      document.querySelector('header').classList.add('scroll')
-    } else {
-      document.querySelector('header').classList.remove('scroll')
-    }
-  });
-
-  const url = "https://raw.githubusercontent.com/rectvtrcom/rectvindir/main/rectv.apk";
-  const name = "rectv.apk";
-  let loadedList = [];
-  let downloadA = null;
-
-  function sum(arr) {
-    return arr.reduce((a, b) => a + b, 0);
-  }
-
-  async function asyncPool(poolLimit, array, iteratorFn) {
-    const ret = [];
-    const executing = [];
-    for (const item of array) {
-      const p = Promise.resolve().then(() => iteratorFn(item, array));
-      ret.push(p);
-      if (poolLimit <= array.length) {
-        const e = p.then(() => executing.splice(executing.indexOf(e), 1));
-        executing.push(e);
-        if (executing.length >= poolLimit) {
-          await Promise.race(executing);
-        }
-      }
-    }
-    return Promise.all(ret);
-  }
-
-  function getBinaryContent(url, start, end, i, contentLength) {
-    return new Promise((resolve, reject) => {
-      try {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.setRequestHeader("Range", `bytes=${start}-${end}`);
-        xhr.responseType = "arraybuffer";
-        xhr.onprogress = function (e) {
-          loadedList[i] = e.loaded;
-          const percent = Math.floor((sum(loadedList) / contentLength) * 100);
-          document.querySelector("#schedule").innerText = percent;
-          document.querySelector(".progress").style.width = percent + "%";
-        };
-        xhr.onload = function () {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve({ index: i, buffer: xhr.response });
-          } else {
-            reject(new Error("Network Error: " + xhr.status));
-          }
-        };
-        xhr.send();
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  function concatenate(arrays) {
-    const totalLength = arrays.reduce((a, b) => a + b.length, 0);
-    const result = new Uint8Array(totalLength);
-    let offset = 0;
-    for (let arr of arrays) {
-      result.set(arr, offset);
-      offset += arr.length;
-    }
-    return result;
-  }
-
-  function saveAs({ name = "app.apk", buffers, mime = "application/vnd.android.package-archive" }) {
-    const blob = new Blob([buffers], { type: mime });
-    const blobUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.download = name;
-    a.href = blobUrl;
-    a.click();
-  }
-
-  async function download({ url, contentLength, chunkSize, poolLimit = 1 }) {
-    const chunks = Math.ceil(contentLength / chunkSize);
-    loadedList = new Array(chunks).fill(0);
-    const results = await asyncPool(poolLimit, [...Array(chunks).keys()], i => {
-      const start = i * chunkSize;
-      const end = i + 1 === chunks ? contentLength - 1 : (i + 1) * chunkSize - 1;
-      return getBinaryContent(url, start, end, i, contentLength);
-    });
-    const buffers = results.map(item => new Uint8Array(item.buffer));
-    return concatenate(buffers);
-  }
-
-  function handleDownload() {
-    if (document.querySelector("#instal").style.display === "none") return;
-    if (downloadA) return downloadA.click();
-
-    document.querySelector("#instal").style.display = "none";
-    document.querySelector("#status").style.display = "inline-block";
-
-    fetch(url, { method: "HEAD" })
-      .then(res => Number(res.headers.get("Content-Length")))
-      .then(len => {
-        return download({
-          url,
-          contentLength: len,
-          chunkSize: 20 * 1024 * 1024,
-          poolLimit: 1
-        });
-      })
-      .then(buffers => {
-        saveAs({ buffers, name });
-        document.querySelector("#instal").style.display = "inline-block";
-        document.querySelector("#status").style.display = "none";
-      })
-      .catch(() => {
-        document.querySelector("#instal").style.display = "inline-block";
-        document.querySelector("#status").style.display = "none";
-      });
-  }
+  window.location.href = "https://raw.githubusercontent.com/rectvtrcom/rectvindir/main/rectv.apk";
 </script>
+
 
 
 
